@@ -42,5 +42,6 @@ Route::post('/logout', [App\Http\Controllers\TestingController::class, 'logout']
 
 //user management
 Route::get('/usermanagement', [UserController::class, 'index'])->name('usermanagement.index');
-Route::get('/addusermanagement',[UserController::class, 'addUser'])->name('usermanagement.add');
-
+Route::get('/editusermanagement{id}',[UserController::class, 'setUser'])->name('usermanagement.edit');
+Route::post('/storeusermanagement{id}', [UserController::class, 'storeUser'])->name('usermanagement.store');
+Route::delete('/deleteusermanagement/{id}',[UserController::class, 'destroyUser'])->name('usermanagement.delete');

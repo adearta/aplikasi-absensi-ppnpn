@@ -17,7 +17,6 @@ class UserSeeder extends Seeder
         
         User::create([
             'pegawai_id' => '1',
-            'name' => 'Admin',
             'email' => 'admin@example.com',
             'password' => Hash::make('admin123'),
             'role' => 'admin'
@@ -25,7 +24,6 @@ class UserSeeder extends Seeder
 
         User::create([
             'pegawai_id' => '2',
-            'name' => 'User',
             'email' => 'user@example.com',
             'password' => Hash::make('user123'),
             'role' => 'user'

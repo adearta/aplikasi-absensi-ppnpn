@@ -44,7 +44,12 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="text-center">Data absensi belum tersedia.</td>
+                    <th>1.</th>
+                    <th>data absensi belum tersedia</th>
+                    <th>-</th>
+                    <th>-</th>
+                    <th>-</th>
+                    <th>-</th>
                 </tr>
                 @endforelse
             </tbody>

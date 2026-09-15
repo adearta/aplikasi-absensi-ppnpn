@@ -47,8 +47,8 @@
                      @endif
                     <td>
                         <!-- <a href="#" class="btn btn-sm btn-outline-primary">Tambah</a> -->
-                        <a href="#" class="btn btn-sm btn-outline-primary">Edit</a>
-                        <form action="#" method="POST" class="d-inline">
+                        <a href="{{route('usermanagement.edit', $pgw->pegawai_id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+                        <form action="{{route('usermanagement.delete', $pgw->pegawai_id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
