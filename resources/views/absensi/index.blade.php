@@ -12,7 +12,7 @@
             @endif
             {{-- 1. TAMBAHKAN DI SINI: ALERT ERROR / WARNING --}}
             @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-center" role="alert">
                 <strong>Peringatan!</strong> {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -27,16 +27,18 @@
             @endif
             <div class="card">
                 <div class="row">
-                    <div class="col-6 d-flex justify-content-center">
+                    <div class="col-12 d-flex justify-content-center">
                         <!-- <div class="container mt-4 "> -->
                         <div class="alert alert-secondary d-flex justify-content-center" role="alert">
                             Waktu Saat Ini: <span id="live-time" class="fw-bold ms-1 me-1"> </span><span>WITA</span>
                             <!-- </div> -->
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <!-- <div class="col d-flex justify-content-center"> -->
                     @if ($sudahAbsen)
-                    <div class="col-12 d-flex justify-content-center">
+                    <div class="col-6 d-flex justify-content-center">
                         <div class="alert alert-success" role="alert">
                             Anda sudah melakukan absensi hari ini.
                         </div>
@@ -49,7 +51,6 @@
                         </form>
                     </div>
                     @endif
-                </div>
                 <!-- <div class="col-6 d-flex justify-content-center"> -->
                 @if ($sudahAbsen && !$sudahPulang)
                 <div class="col-6 d-flex justify-content-center">

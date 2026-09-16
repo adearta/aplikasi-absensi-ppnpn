@@ -33,6 +33,21 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: 'id',
+      // Event saat tanggal pada kalender diklik
+      dateClick: function(info) {
+        // Redirect otomatis ke route detail dengan membawa variabel tanggal (YYYY-MM-DD)
+        window.location.href = "{{ url('/admin/absensi/detail') }}/" + info.dateStr;
+      }
+    });
+    calendar.render();
+  });
+</script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var dateModal = new bootstrap.Modal(document.getElementById('dateModal'));
@@ -63,5 +78,5 @@
 
         calendar.render();
     });
-</script>
+</script> -->
 @endsection

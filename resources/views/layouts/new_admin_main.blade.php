@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalender Interaktif</title>
     
@@ -32,7 +32,7 @@
             cursor: pointer;
         }
     </style>
-</head>
+    </head>
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -92,7 +92,11 @@
                         </a>
                         <a class="nav-link" href="{{ route('admin.presence') }}">
                             <div class="sb-nav-link-icon"></div>
-                            Rekap Absensi
+                            Rekap Absensi Hari ini
+                        </a>
+                        <a class="nav-link" href="{{ route('admin.presence.rekapBulanan') }}">
+                            <div class="sb-nav-link-icon"></div>
+                            Rekap Absensi Bulanan
                         </a>
                         <a class="nav-link" href="{{ route('usermanagement.index') }}">
                             <div class="sb-nav-link-icon"></div>

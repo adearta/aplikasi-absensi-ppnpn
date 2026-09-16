@@ -21,6 +21,25 @@ class AdminController extends Controller
         $this->presensi = Absensi::tablename('absensis');
         $this->pegawai = pegawai::tablename('pegawais');
     }
+    public function detailAbsensiTanggal(string $tanggal)
+    {
+        // Ambil data pegawai beserta absensinya pada tanggal tertentu
+        $absensis = \DB::table('pegawais')
+            ->leftJoin('absensis', function ($join) use ($tanggal) {
+                $join->on('pegawais.id', '=', 'absensis.pegawai_id')
+                    ->whereDate('absensis.created_at', '=', $tanggal); // atau filter berdasarkan kolom tanggal di presences
+            })
+            ->select(
+                'pegawais.namaPegawai',
+                'pegawais.bidangPenempatan',
+                'absensis.jam_masuk',
+                'absensis.jam_keluar',
+                'absensis.created_at as tanggal_absensi'
+            )
+            ->get();
+
+        return view('admin.presence.date_present', compact('absensis', 'tanggal'));
+    }
     public function index()
     {
         //menampilkan index dashboard admin
@@ -204,5 +223,101 @@ class AdminController extends Controller
             )
             ->get();
         return view('admin.presence.present', compact('presensi'));
+    }
+    //export data tabel ke format excel
+    public function exportExcel()
+    {
+        // 1. Ambil data pegawai & absensi dari database
+        $pegawai = \DB::table('pegawais')
+            ->leftJoin('absensis', 'pegawais.id', '=', 'absensis.pegawai_id')
+            ->select(
+                'pegawais.namaPegawai',
+                'pegawais.bidangPenempatan',
+                'absensis.jam_masuk',
+                'absensis.jam_keluar'
+            )
+            ->get();
+
+        $fileName = 'REKAP_ABSENSI_PEGAWAI_PPNPN_' . date('Y-m-d') . '.xls';
+
+        // 2. Gunakan Response Stream Download bawaan Laravel
+        return response()->streamDownload(function () use ($pegawai) {
+            echo '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';
+            echo '<head>';
+            echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+            echo '<style>
+                body { font-family: "Times New Roman", Times, serif; }
+                .text-center { text-align: center; }
+                .bold { font-weight: bold; }
+                .kop-1 { font-size: 14pt; font-weight: bold; }
+                .kop-2 { font-size: 14pt; font-weight: bold; }
+                .kop-3 { font-size: 14pt; font-weight: bold; }
+                .kop-alamat { font-size: 10pt; }
+                .judul { font-size: 12pt; font-weight: bold; text-align: center; }
+              </style>';
+            echo '</head>';
+            echo '<body>';
+
+            echo '<table>';
+
+            // --- KOP SURAT ---
+            echo '<tr><td colspan="5" class="text-center kop-1">KEJAKSAAN REPUBLIK INDONESIA</td></tr>';
+            echo '<tr><td colspan="5" class="text-center kop-2">KEJAKSAAN TINGGI BALI</td></tr>';
+            echo '<tr><td colspan="5" class="text-center kop-3">KEJAKSAAN NEGERI BANGLI</td></tr>';
+            echo '<tr><td colspan="5" class="text-center kop-alamat">Jl. Lettu Lila No. 11 A Kabupaten Bangli 80613</td></tr>';
+            echo '<tr><td colspan="5" class="text-center kop-alamat">Telp. (0361)-550136,Fax : (0361)-91048, https://kejari-bangli.kejaksaan.go.id</td></tr>';
+
+            // Garis Pembatas Kop
+            echo '<tr><td colspan="5" style="border-bottom: 3px double #000000; height: 10px;"></td></tr>';
+            echo '<tr><td colspan="5" style="height: 15px;"></td></tr>';
+
+            // --- JUDUL REKAP ---
+            echo '<tr><td colspan="5" class="judul">REKAP ABSENSI PEGAWAI PPNPN</td></tr>';
+            echo '<tr><td colspan="5" style="height: 15px;"></td></tr>';
+
+            // --- TABEL DATA ---
+            echo '<tr>
+                <td style="width: 5%;"></td>
+                <td class="bold text-center" style="border:1px solid #000; width: 30%;">Nama Pegawai</td>
+                <td class="bold text-center" style="border:1px solid #000; width: 25%;">Bidang Penempatan</td>
+                <td class="bold text-center" style="border:1px solid #000; width: 20%;">Jam Masuk</td>
+                <td class="bold text-center" style="border:1px solid #000; width: 20%;">Jam Pulang</td>
+              </tr>';
+
+            foreach ($pegawai as $row) {
+                $jamMasuk = $row->jam_masuk ?? '';
+                $jamPulang = $row->jam_pulang ?? '';
+
+                echo '<tr>
+                    <td></td>
+                    <td style="border:1px solid #000; text-align:left;">' . htmlspecialchars($row->namaPegawai) . '</td>
+                    <td style="border:1px solid #000; text-align:left;">' . htmlspecialchars($row->bidangPenempatan) . '</td>
+                    <td style="border:1px solid #000; text-align:center;">' . htmlspecialchars($jamMasuk) . '</td>
+                    <td style="border:1px solid #000; text-align:center;">' . htmlspecialchars($jamPulang) . '</td>
+                  </tr>';
+            }
+
+            // --- TANDA TANGAN ---
+            echo '<tr><td colspan="5" style="height: 30px;"></td></tr>';
+            echo '<tr>
+                <td colspan="3"></td>
+                <td colspan="2" style="text-align:left;">Mengetahui Kepala Kejaksaan Negeri Bangli</td>
+              </tr>';
+            echo '<tr><td colspan="5" style="height: 50px;"></td></tr>';
+            echo '<tr>
+                <td colspan="3"></td>
+                <td colspan="2" class="bold" style="text-align:left; text-decoration: underline;">YETTY HERAWATY, S.H., M.H</td>
+              </tr>';
+            echo '<tr>
+                <td colspan="3"></td>
+                <td colspan="2" style="text-align:left;">Jaksa Madya NIP. 197909062002122001</td>
+              </tr>';
+
+            echo '</table>';
+            echo '</body>';
+            echo '</html>';
+        }, $fileName, [
+            'Content-Type' => 'application/vnd.ms-excel',
+        ]);
     }
 }
