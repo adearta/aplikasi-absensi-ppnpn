@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Override;
 
-class TestingController extends Controller
+class AuthController extends Controller
 {
     //
     public function index()

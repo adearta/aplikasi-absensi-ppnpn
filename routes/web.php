@@ -2,17 +2,16 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PresencesController;
-use App\Http\Controllers\TestingController;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 
 // login
-Route::get('/loginauth', [TestingController::class, 'index'])->name('loginauth');
-Route::post('/loginauth', [App\Http\Controllers\TestingController::class, 'Login'])->name('login.post');
-Route::post('/logout', [App\Http\Controllers\TestingController::class, 'logout'])->name('logout');
+Route::get('/loginauth', [AuthController::class, 'index'])->name('loginauth');
+Route::post('/loginauth', [App\Http\Controllers\AuthController::class, 'Login'])->name('login.post');
+Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 //role views
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');

@@ -80,9 +80,16 @@ class UserController extends Controller
         );
         return redirect()->route('usermanagement.index')->with('success', 'Data user berhasil di update');
     }
-    public function destroyUser(string $id){
-        $id = User::findOrFail($id);
-        $id->delete();
-        return redirect()->route('usermanagement.index')->with('success', 'Data pegawai berhasil dihapus!');
+    public function destroyUser(string $id)
+    {
+        // Cari data user berdasarkan pegawai_id atau id
+        $user = User::where('pegawai_id', $id)->first();
+
+        if ($user) {
+            $user->delete();
+            return redirect()->route('usermanagement.index')->with('success', 'Data user berhasil dihapus.');
+        }
+
+        return redirect()->route('usermanagement.index')->with('error', 'Data user tidak ditemukan.');
     }
 }
