@@ -4,7 +4,7 @@
 <div class="container-fluid my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3>Data Absensi Pegawai - Tanggal: {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y') }}</h3>
-        <a href="{{ url('/admin/kalender') }}" class="btn btn-secondary">Kembali ke Kalender</a>
+        <a href="{{ url('/admin') }}" class="btn btn-secondary">Kembali ke Kalender</a>
     </div>
 
     <div class="card shadow mb-4">
