@@ -24,7 +24,6 @@
                             <th>Bidang Penempatan</th>
                             <th>Jam Masuk</th>
                             <th>Jam Pulang</th>
-
                         </tr>
                     </thead>
                     <tfoot>
@@ -45,7 +44,6 @@
                             <td>{{$presen->bidangPenempatan}}</td>
                             <td>{{$presen->jam_masuk}}</td>
                             <td>{{$presen->jam_keluar}}</td>
-
                         </tr>
                         @empty
                         <div class="alert alert-danger">

@@ -12,16 +12,16 @@
                     <label class="form-label fw-bold">Pilih Bulan</label>
                     <select name="bulan" class="form-select">
                         @php
-                            $namaBulan = [
-                                '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', '04' => 'April',
-                                '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Agustus',
-                                '09' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember'
-                            ];
+                        $namaBulan = [
+                        '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', '04' => 'April',
+                        '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Agustus',
+                        '09' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember'
+                        ];
                         @endphp
                         @foreach($namaBulan as $key => $val)
-                            <option value="{{ $key }}" {{ sprintf('%02d', $bulan) == $key ? 'selected' : '' }}>
-                                {{ $val }}
-                            </option>
+                        <option value="{{ $key }}" {{ sprintf('%02d', $bulan) == $key ? 'selected' : '' }}>
+                            {{ $val }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -30,7 +30,7 @@
                     <label class="form-label fw-bold">Pilih Tahun</label>
                     <select name="tahun" class="form-select">
                         @for($y = date('Y'); $y >= 2020; $y--)
-                            <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>{{ $y }}</option>
+                        <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>{{ $y }}</option>
                         @endfor
                     </select>
                 </div>
@@ -79,9 +79,9 @@
                             <td>{{ $row->jam_keluar ?? '-' }}</td>
                             <td>
                                 @if($row->jam_masuk)
-                                    <span class="badge bg-success">Hadir</span>
+                                <span class="badge bg-success">Hadir</span>
                                 @else
-                                    <span class="badge bg-danger">Tidak Hadir</span>
+                                <span class="badge bg-danger">Tidak Hadir</span>
                                 @endif
                             </td>
                         </tr>
@@ -93,11 +93,6 @@
                     </tbody>
                 </table>
             </div>
-            <!-- <div class="row card-footer">
-                <div class="col-1 d-flex justify-content-center">
-                    <a type="button" class="btn btn-success" href="{{ route('admin.presence.exportBulanan') }}">Export data ke Excel</a>
-                </div>
-            </div> -->
         </div>
     </div>
 </div>

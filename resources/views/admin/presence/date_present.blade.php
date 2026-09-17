@@ -56,11 +56,6 @@
                     </tbody>
                 </table>
             </div>
-            <!-- <div class="row card-footer">
-                <div class="col-1 d-flex justify-content-center">
-                    <a type="button" class="btn btn-success" href="{{ route('admin.excel') }}">Export data ke Excel</a>
-                </div>
-            </div> -->
         </div>
     </div>
 </div>
