@@ -51,32 +51,32 @@
                         </form>
                     </div>
                     @endif
-                <!-- <div class="col-6 d-flex justify-content-center"> -->
-                @if ($sudahAbsen && !$sudahPulang)
-                <div class="col-6 d-flex justify-content-center">
-                    <form action="{{ route('absensi.pulang') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-danger">Absen Keluar</button>
-                    </form>
-                </div>
-                @elseif ($sudahPulang)
-                <div class="col-6 d-flex justify-content-center">
-                    <div class="alert alert-success" role="alert">
-                        Anda sudah melakukan Absensi Pulang hari ini.
+                    <!-- <div class="col-6 d-flex justify-content-center"> -->
+                    @if ($sudahAbsen && !$sudahPulang)
+                    <div class="col-6 d-flex justify-content-center">
+                        <form action="{{ route('absensi.pulang') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Absen Keluar</button>
+                        </form>
                     </div>
+                    @elseif ($sudahPulang)
+                    <div class="col-6 d-flex justify-content-center">
+                        <div class="alert alert-success" role="alert">
+                            Anda sudah melakukan Absensi Pulang hari ini.
+                        </div>
+                    </div>
+                    @else
+                    <div class="col-6 d-flex justify-content-center">
+                        <form action="{{ route('absensi.pulang') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Absen Keluar</button>
+                        </form>
+                    </div>
+                    @endif
                 </div>
-                @else
-                <!-- <div class="col-6 d-flex justify-content-center"> -->
-                <form action="{{ route('absensi.pulang') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-danger">Absen Keluar</button>
-                </form>
             </div>
-            @endif
         </div>
     </div>
-</div>
-</div>
 </div>
 </div>
 </div>

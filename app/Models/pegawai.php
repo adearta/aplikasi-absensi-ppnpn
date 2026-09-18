@@ -29,4 +29,8 @@ class pegawai extends Model
         'lamaBekerja',
         'gaji',
     ];
+    public function absensis()
+    {
+        return $this->hasMany(Absensi::class, 'pegawai_id');
+    }
 }

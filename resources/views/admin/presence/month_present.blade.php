@@ -60,30 +60,23 @@
                     <thead class="table-dark">
                         <tr>
                             <th width="5%">No</th>
-                            <th>Tanggal</th>
+                            <!-- <th>Tanggal</th> -->
                             <th>Nama Pegawai</th>
                             <th>Bidang Penempatan</th>
-                            <th>Jam Masuk</th>
-                            <th>Jam Pulang</th>
-                            <th>Status</th>
+                            <th>Jumlah Hari Masuk</th>
+                            <th>Jumlah Tidak Absen</th>
+                            <!-- <th>Status</th> -->
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($absensi as $index => $row)
+                        @forelse($pegawai as $index => $row)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $row->tanggal_absensi ? \Carbon\Carbon::parse($row->tanggal_absensi)->format('d/m/Y') : '-' }}</td>
+                            <!-- <td>{{ $row->tanggal_absensi ? \Carbon\Carbon::parse($row->tanggal_absensi)->format('d/m/Y') : '-' }}</td> -->
                             <td>{{ $row->namaPegawai }}</td>
                             <td>{{ $row->bidangPenempatan }}</td>
-                            <td>{{ $row->jam_masuk ?? '-' }}</td>
-                            <td>{{ $row->jam_keluar ?? '-' }}</td>
-                            <td>
-                                @if($row->jam_masuk)
-                                <span class="badge bg-success">Hadir</span>
-                                @else
-                                <span class="badge bg-danger">Tidak Hadir</span>
-                                @endif
-                            </td>
+                            <td>{{ $row->jumlah_masuk ?? '0' }}</td>
+                            <td>{{ $row->jumlah_tidak_absen ?? '-' }}</td>
                         </tr>
                         @empty
                         <tr>
