@@ -10,7 +10,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-4 d-flex align-items-end gap-2" style="margin-top: 32px;">
-                <a type="button" class="btn btn-primary" href="{{ route('admin.create') }}">Tambah Pegawai</a>
+                <a type="button" class="btn btn-primary" href="{{ route('admin.index') }}">Kalender</a>
                     <a type="button" class="btn btn-success" href="{{ route('admin.excel') }}"> <i class="fas fa-file-excel"></i> Ekspor Excel
                     </a>
                 </div>

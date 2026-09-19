@@ -83,7 +83,7 @@
                         <div class="sb-sidenav-menu-heading">MENU</div>
                         <a class="nav-link" href="{{ route('admin.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Dashboard
+                            Kalender
                         </a>
                         <div class="sb-sidenav-menu-heading">Monitoring Pegawai</div>
                         <a class="nav-link" href="{{ route('pegawai_present') }}">
