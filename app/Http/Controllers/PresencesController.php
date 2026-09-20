@@ -145,17 +145,16 @@ class PresencesController extends Controller
         // Ambil data pegawai beserta agregat absensi sesuai bulan & tahun yang dipilih
         $pegawai = pegawai::withCount([
             'absensis as jumlah_masuk' => function ($query) use ($bulan, $tahun) {
-                $query->where('status', 'Absen')
+                $query->whereNotNull('jam_keluar')
                     ->whereMonth('created_at', $bulan)
                     ->whereYear('created_at', $tahun);
             },
             'absensis as jumlah_tidak_absen' => function ($query) use ($bulan, $tahun) {
-                $query->where('status', 'Belum Absen')
+                $query->whereNull('jam_keluar')
                     ->whereMonth('created_at', $bulan)
                     ->whereYear('created_at', $tahun);
             }
         ])->get();
-
         $fileName = 'REKAP_ABSENSI_PEGAWAI_PPNPN_' . strtoupper($namaBulan) . '_' . $tahun . '.xls';
 
         return response()->streamDownload(function () use ($pegawai, $namaBulan, $tahun) {
@@ -166,7 +165,7 @@ class PresencesController extends Controller
             body { font-family: "Times New Roman", Times, serif; font-size: 11pt; }
             .text-center { text-align: center; }
             .bold { font-weight: bold; }
-            .kop-1, .kop-2, .kop-3 { font-size: 11pt; font-weight: bold; text-align: center; }
+            .kop-1, .kop-2, .kop-3  { font-size: 11pt; font-weight: bold; text-align: center; }
             .kop-alamat { font-size: 10pt; text-align: center; }
             .table-data { border-collapse: collapse; width: 100%; }
             .table-data th, .table-data td { border: 1px solid #000000; padding: 4px; vertical-align: middle; }
@@ -187,8 +186,8 @@ class PresencesController extends Controller
             echo '<tr><td colspan="4" style="height: 15px;"></td></tr>';
 
             // --- JUDUL REKAP ---
-            echo '<tr><td colspan="4" class="text-center bold" style="font-size: 12pt;">REKAP ABSENSI PEGAWAI PPNPN</td></tr>';
-            echo '<tr><td colspan="4" class="text-center bold" style="font-size: 12pt;">BULAN ' . strtoupper($namaBulan) . ' TAHUN ' . $tahun . '</td></tr>';
+            echo '<tr><td colspan="4" class="text-center bold" style="font-size: 12pt; text-align:center">REKAP ABSENSI PEGAWAI PPNPN</td></tr>';
+            echo '<tr><td colspan="4" class="text-center bold" style="font-size: 12pt; text-align:center">BULAN ' . strtoupper($namaBulan) . ' TAHUN ' . $tahun . '</td></tr>';
             echo '<tr><td colspan="4" style="height: 15px;"></td></tr>';
 
             // --- TABEL REKAP ---
@@ -226,7 +225,7 @@ class PresencesController extends Controller
             echo '<tr><td colspan="4" style="height: 50px;"></td></tr>';
             echo '<tr>
                 <td colspan="2"></td>
-                <td colspan="2" class="text-center bold" style="text-decoration: underline;">YETTY HERAWATY, S.H., M.H</td>
+                <td colspan="2" class="text-center bold" style="text-decoration: underline;text-align:center">YETTY HERAWATY, S.H., M.H</td>
               </tr>';
             echo '<tr>
                 <td colspan="2"></td>
