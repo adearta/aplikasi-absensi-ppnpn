@@ -6,8 +6,9 @@
             <h4>Edit Pegawai</h4>
         </div>
         <div class="card-body"> 
-          <form action ="{{ route('admin.update', $pegawai->id) }}" method="PUT" enctype="multipart/form-data">
+          <form action ="{{ route('admin.update', $pegawai->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
     <div class="mb-3">
   <label for="nik" class="form-label">NIK</label>
   <input type="text" id="nik" class="form-control @error('nik') is-invalid @enderror" placeholder="{{$pegawai->nik}}" value="{{$pegawai->nik}}" name="nik">
