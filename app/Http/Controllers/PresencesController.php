@@ -17,8 +17,9 @@ class PresencesController extends Controller
     {
         //
         $pegawaiID = Auth::user()->pegawai_id;
-        $absensi = \App\Models\Absensi::where('pegawai_id', $pegawaiID)->get();
         $pegawai = \App\Models\Pegawai::where('id', $pegawaiID)->get();
+        $absensi = \App\Models\Absensi::where('pegawai_id', $pegawaiID)->orderBy('id', 'desc')->get();
+
         return view('pages.presence.index_present', compact('absensi', 'pegawai'));
         //cukup menampilkan data absensi pegawai yang sedang login
         // return view('pages.presence.index_present', compact('absensi'));
@@ -48,8 +49,11 @@ class PresencesController extends Controller
     public function cekAbsensi()
     {
         //
+        $currentHour = now()->timezone('Asia/Makassar')->format('H');
         $pegawaiID = Auth::user()->pegawai_id;
-
+        $namaPegawai = \App\Models\pegawai::where('id', $pegawaiID)->first();
+        //cek apakah sudah mulai jam absensi
+        // $absenMasuk =  if((int)$currentHour >=7)
         // Cek apakah pegawai sudah absen hari ini
         $sudahAbsen = \App\Models\Absensi::where('pegawai_id', $pegawaiID)
             ->whereDate('tanggal', now()->toDateString())
@@ -60,7 +64,7 @@ class PresencesController extends Controller
             ->whereNotNull('jam_keluar')
             ->exists();
 
-        return view('absensi.index', compact('sudahAbsen', 'sudahPulang'));
+        return view('absensi.index', compact('sudahAbsen', 'sudahPulang', 'namaPegawai','currentHour'));
         // return view('absensi.index');
     }
     public function absenPulang(Request $request)
@@ -133,7 +137,7 @@ class PresencesController extends Controller
                 'absensis.created_at as tanggal_absensi'
             )
             ->get();
-        return view('admin.presence.month_present', compact('absensi', 'bulan', 'tahun','pegawai'));
+        return view('admin.presence.month_present', compact('absensi', 'bulan', 'tahun', 'pegawai'));
     }
     public function exporExcelBulanan(Request $request)
     {

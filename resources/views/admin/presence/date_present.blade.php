@@ -34,7 +34,7 @@
                             <td>{{ $row->namaPegawai }}</td>
                             <td>{{ $row->bidangPenempatan }}</td>
                             <td>{{ $row->jam_masuk ?? '-' }}</td>
-                            <td>{{ $row->jam_pulang ?? '-' }}</td>
+                            <td>{{ $row->jam_keluar ?? '-' }}</td>
                             <td>
                                 @if($row->jam_masuk)
                                 <span class="badge bg-success">Absen</span>

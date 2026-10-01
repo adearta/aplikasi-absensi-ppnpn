@@ -3,12 +3,13 @@
 <div>
     <div class="card">
         <div class="card">
-            @if (session('pegawai'))
+            <!-- @php echo $namaPegawai->namaPegawai; @endphp -->
+            @if ($sudahPulang === null)
             <h3 class="text-center mb-4">
-                SELAMAT DATANG USER {{ session('pegawai')->namaPegawai }}
+                SELAMAT DATANG USER {{ $namaPegawai->namaPegawai }}
             </h3>
             @else
-            <h3 class="text-center mb-4">SAMPAI JUMPA ESOK HARI</h3>
+            <h3 class="text-center mb-4">SAMPAI JUMPA ESOK HARI {{$namaPegawai->namaPegawai}}</h3>
             @endif
             {{-- 1. TAMBAHKAN DI SINI: ALERT ERROR / WARNING --}}
             @if (session('error'))
@@ -44,39 +45,49 @@
                         </div>
                     </div>
                     @else
-                    <div class="col-6 d-flex justify-content-center">
+                    @if($currentHour >=6 && $currentHour <=8)
+                        <div class="col-6 d-flex justify-content-center">
                         <form action="{{ route('absensi.store') }}" method="POST">
                             @csrf
                             <button type="submit" class="btn btn-success" id="Absen" value="Absen">Absen Masuk</button>
                         </form>
-                    </div>
-                    @endif
-                    <!-- <div class="col-6 d-flex justify-content-center"> -->
-                    @if ($sudahAbsen && !$sudahPulang)
-                    <div class="col-6 d-flex justify-content-center">
-                        <form action="{{ route('absensi.pulang') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Absen Keluar</button>
-                        </form>
-                    </div>
-                    @elseif ($sudahPulang)
-                    <div class="col-6 d-flex justify-content-center">
-                        <div class="alert alert-success" role="alert">
-                            Anda sudah melakukan Absensi Pulang hari ini.
-                        </div>
-                    </div>
-                    @else
-                    <div class="col-6 d-flex justify-content-center">
-                        <form action="{{ route('absensi.pulang') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Absen Keluar</button>
-                        </form>
-                    </div>
-                    @endif
                 </div>
+                @else
+                <div class="col-6 d-flex justify-content-center">
+                    <div class="alert alert-success" role="alert">
+                        Absen Mulai Pukul 07.00 -07.59!.
+                    </div>
+                </div>
+                @endif
+                <!-- </div> -->
+                @endif
+                <!-- <div class="col-6 d-flex justify-content-center"> -->
+                @if ($sudahAbsen && !$sudahPulang)
+                <div class="col-6 d-flex justify-content-center">
+                    <form action="{{ route('absensi.pulang') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Absen Keluar</button>
+                    </form>
+                </div>
+                @elseif ($sudahPulang)
+                <div class="col-6 d-flex justify-content-center">
+                    <div class="alert alert-success" role="alert">
+                        Anda sudah melakukan Absensi Pulang hari ini.
+                    </div>
+                </div>
+                @else
+                <div class="col-6 d-flex justify-content-center">
+                    <form action="{{ route('absensi.pulang') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Absen Keluar</button>
+                    </form>
+                </div>
+                @endif
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 </div>
 </div>
